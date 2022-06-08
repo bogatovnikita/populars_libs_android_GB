@@ -9,7 +9,7 @@ class AdapterUserEntity : RecyclerView.Adapter<ViewHolderUserEntity>() {
 
     fun setListUsers(usersItemList: MutableList<UserEntity>) {
         usersList.clear()
-        usersList = usersItemList
+        usersList.addAll(usersItemList)
         notifyDataSetChanged()
     }
 

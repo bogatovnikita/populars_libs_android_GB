@@ -1,8 +1,10 @@
 package com.bogatovnikita.popularslibsandroidgb
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,33 +20,56 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        initClickButton()
         initRecyclerView()
-        getData()
+    }
+
+    private fun initClickButton() {
+        Log.d("!!!", "initClickButton: ")
+        binding.refreshButtonMainActivity.setOnClickListener {
+            showProgressBar(true)
+            getData()
+        }
+    }
+
+    private fun showProgressBar(flag: Boolean) {
+        Log.d("!!!", "showProgressBar:$flag ")
+        binding.progressBarMainActivity.isVisible = flag
+        binding.recyclerViewActivityMain.isVisible = !flag
     }
 
     private fun initRecyclerView() {
+        Log.d("!!!", "initRecyclerView: ")
         with(binding.recyclerViewActivityMain) {
-            addItemDecoration(DividerItemDecoration(this@MainActivity, RecyclerView.HORIZONTAL))
+            addItemDecoration(DividerItemDecoration(this@MainActivity, RecyclerView.VERTICAL))
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = adapterUserEntity
-
-
         }
     }
 
     private fun setDataAdapter(data: MutableList<UserEntity>) {
+        Log.d("!!!", "setDataAdapter: ")
         adapterUserEntity.setListUsers(data)
     }
 
     private fun onError(throwable: Throwable) {
-        Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show()
+        Log.d("!!!", "onError: ")
+        Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
     }
 
     private fun getData() {
+        Log.d("!!!", "getData: ")
         userEntityRepository.getUsers(
             onSuccess = {
+                showProgressBar(false)
                 setDataAdapter(it)
-            }, onError = { onError(it) }
+                Log.d("!!!", "getData success $it ")
+            }, onError = {
+                showProgressBar(false)
+                onError(it)
+                Log.d("!!!", "getData error $it")
+            }
         )
     }
 }

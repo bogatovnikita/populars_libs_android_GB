@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">Populars Libs Android GB</string>refresh
     <string name="refresh">Refresh</string>
-    <string name="error">Error</string>
-
 </resources>
