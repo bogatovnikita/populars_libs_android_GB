@@ -1,7 +1,9 @@
-package com.bogatovnikita.popularslibsandroidgb
+package com.bogatovnikita.popularslibsandroidgb.data
 
 import android.os.Handler
 import android.os.Looper
+import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
+import com.bogatovnikita.popularslibsandroidgb.domain.UserEntityRepository
 
 class FakeUserEntityImplementation : UserEntityRepository {
 
@@ -12,7 +14,10 @@ class FakeUserEntityImplementation : UserEntityRepository {
     )
 
 
-    override fun getUsers(onSuccess: (MutableList<UserEntity>) -> Unit, onError: ((Throwable) -> Unit)?) {
+    override fun getUsers(
+        onSuccess: (MutableList<UserEntity>) -> Unit,
+        onError: ((Throwable) -> Unit)?
+    ) {
         Handler(Looper.getMainLooper()).postDelayed({ onSuccess(data) }, DATA_LOADING_FAKE_DELAY)
     }
 

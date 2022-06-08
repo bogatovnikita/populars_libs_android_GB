@@ -1,4 +1,4 @@
-package com.bogatovnikita.popularslibsandroidgb
+package com.bogatovnikita.popularslibsandroidgb.domain
 
 data class UserEntity(
     val login: String,

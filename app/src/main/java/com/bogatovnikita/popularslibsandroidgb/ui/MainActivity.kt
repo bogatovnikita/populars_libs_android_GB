@@ -1,4 +1,4 @@
-package com.bogatovnikita.popularslibsandroidgb
+package com.bogatovnikita.popularslibsandroidgb.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +8,11 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bogatovnikita.popularslibsandroidgb.app
 import com.bogatovnikita.popularslibsandroidgb.databinding.ActivityMainBinding
+import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
+import com.bogatovnikita.popularslibsandroidgb.domain.UserEntityRepository
+import com.bogatovnikita.popularslibsandroidgb.ui.adapters.AdapterUserEntity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

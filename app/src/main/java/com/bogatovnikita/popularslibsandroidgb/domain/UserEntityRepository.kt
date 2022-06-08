@@ -1,4 +1,4 @@
-package com.bogatovnikita.popularslibsandroidgb
+package com.bogatovnikita.popularslibsandroidgb.domain
 
 interface UserEntityRepository {
     fun getUsers(

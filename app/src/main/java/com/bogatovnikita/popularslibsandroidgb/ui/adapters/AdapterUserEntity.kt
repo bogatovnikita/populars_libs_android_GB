@@ -1,7 +1,8 @@
-package com.bogatovnikita.popularslibsandroidgb
+package com.bogatovnikita.popularslibsandroidgb.ui.adapters
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
 
 class AdapterUserEntity : RecyclerView.Adapter<ViewHolderUserEntity>() {
 
