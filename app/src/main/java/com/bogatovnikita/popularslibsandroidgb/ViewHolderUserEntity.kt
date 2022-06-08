@@ -14,7 +14,7 @@ class ViewHolderUserEntity(parent: ViewGroup) : RecyclerView.ViewHolder(
     fun bind(userEntity: UserEntity) {
         with(binding) {
             iconItemUserEntity.load(userEntity.avatar)
-            idItemUserEntity.setText(userEntity.id.toInt())
+            idItemUserEntity.text = userEntity.id.toString()
             nameItemUserEntity.text = userEntity.login
         }
     }
