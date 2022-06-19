@@ -7,7 +7,7 @@
     android:padding="@dimen/small_padding">
 
     <ImageView
-        android:id="@+id/icon_item_user_entity"
+        android:id="@+id/icon_user_image_view"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:padding="@dimen/small_padding"
@@ -16,26 +16,26 @@
         tools:src="@drawable/ic_launcher_foreground" />
 
     <TextView
-        android:id="@+id/name_item_user_entity"
+        android:id="@+id/name_user_text_view"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/id_item_user_entity"
-        app:layout_constraintStart_toEndOf="@id/icon_item_user_entity"
-        app:layout_constraintTop_toTopOf="@id/icon_item_user_entity"
+        app:layout_constraintBottom_toTopOf="@id/id_user_text_view"
+        app:layout_constraintStart_toEndOf="@id/icon_user_image_view"
+        app:layout_constraintTop_toTopOf="@id/icon_user_image_view"
         tools:text="Самый крутой программист" />
 
     <TextView
-        android:id="@+id/id_item_user_entity"
+        android:id="@+id/id_user_text_view"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/icon_item_user_entity"
-        app:layout_constraintStart_toEndOf="@id/icon_item_user_entity"
-        app:layout_constraintTop_toBottomOf="@id/name_item_user_entity"
+        app:layout_constraintBottom_toBottomOf="@id/icon_user_image_view"
+        app:layout_constraintStart_toEndOf="@id/icon_user_image_view"
+        app:layout_constraintTop_toBottomOf="@id/name_user_text_view"
         tools:text="777" />
 
 

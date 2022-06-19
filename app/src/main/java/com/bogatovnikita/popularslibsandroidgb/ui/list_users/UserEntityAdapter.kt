@@ -1,10 +1,10 @@
-package com.bogatovnikita.popularslibsandroidgb.ui.adapters
+package com.bogatovnikita.popularslibsandroidgb.ui.list_users
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
 
-class AdapterUserEntity : RecyclerView.Adapter<ViewHolderUserEntity>() {
+class UserEntityAdapter : RecyclerView.Adapter<UserEntityViewHolder>() {
 
     private var usersList = mutableListOf<UserEntity>()
 
@@ -14,11 +14,11 @@ class AdapterUserEntity : RecyclerView.Adapter<ViewHolderUserEntity>() {
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderUserEntity =
-        ViewHolderUserEntity(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserEntityViewHolder =
+        UserEntityViewHolder(parent)
 
-    override fun onBindViewHolder(holder: ViewHolderUserEntity, position: Int) {
-        holder.bind(usersList[position])
+    override fun onBindViewHolder(holderViewHolder: UserEntityViewHolder, position: Int) {
+        holderViewHolder.bind(usersList[position])
     }
 
     override fun getItemCount(): Int = usersList.size
