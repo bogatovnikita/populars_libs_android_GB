@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         this.supportFragmentManager
             .beginTransaction()
             .add(R.id.main_container_frame_layout, ListUsersFragment())
+            .disallowAddToBackStack()
             .commit()
     }
 }

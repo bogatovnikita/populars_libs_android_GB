@@ -1,10 +1,12 @@
 package com.bogatovnikita.popularslibsandroidgb.ui.list_users
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
 
-class UserEntityAdapter : RecyclerView.Adapter<UserEntityViewHolder>() {
+class UserEntityAdapter(private val clickListener: (UserEntity) -> Unit) :
+    RecyclerView.Adapter<UserEntityViewHolder>() {
 
     private var usersList = mutableListOf<UserEntity>()
 
@@ -15,7 +17,10 @@ class UserEntityAdapter : RecyclerView.Adapter<UserEntityViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserEntityViewHolder =
-        UserEntityViewHolder(parent)
+        UserEntityViewHolder(parent) {
+            clickListener(usersList[it])
+            Log.e("pie", "UserEntityAdapter:onCreateViewHolder $it")
+        }
 
     override fun onBindViewHolder(holderViewHolder: UserEntityViewHolder, position: Int) {
         holderViewHolder.bind(usersList[position])

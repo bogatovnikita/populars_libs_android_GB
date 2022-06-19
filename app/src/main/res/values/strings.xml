@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Populars Libs Android GB</string>refresh
     <string name="refresh">Refresh</string>
+    <string name="description_user">Serialization is the process of converting data used by an application to a format that can be transferred over a network or stored in a database or a file. In turn, deserialization is the opposite process of reading data from an external source and converting it into a runtime object. Together they are an essential part of most applications that exchange data with third parties.</string>
 </resources>

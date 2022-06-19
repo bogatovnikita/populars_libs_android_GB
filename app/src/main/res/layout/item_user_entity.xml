@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="@dimen/large_text"
         app:layout_constraintBottom_toBottomOf="@id/icon_user_image_view"
         app:layout_constraintStart_toEndOf="@id/icon_user_image_view"
         app:layout_constraintTop_toBottomOf="@id/name_user_text_view"
