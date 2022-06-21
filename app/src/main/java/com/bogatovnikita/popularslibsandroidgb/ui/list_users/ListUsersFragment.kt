@@ -16,12 +16,12 @@ import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
 import com.bogatovnikita.popularslibsandroidgb.ui.screen_user.ScreenUserFragment
 import com.bogatovnikita.popularslibsandroidgb.utils.LIST_USERS_FROM_USER
 
-class ListUsersFragment : Fragment(), ListUsersContract.View {
+class ListUsersFragment : Fragment() {
     private var _binding: FragmentUsersListBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var adapterUserEntity: UserEntityAdapter
-    private lateinit var presenter: ListUsersContract.Presenter
+    private lateinit var viewModel: ListUsersContract.ViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,13 +36,23 @@ class ListUsersFragment : Fragment(), ListUsersContract.View {
         super.onViewCreated(view, savedInstanceState)
         Log.d("pie", "onViewCreated: fragment")
         initView()
-        presenter = ListUsersPresenter(app.userEntityRepositorySingleton)
-        presenter.attach(this)
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel = ListUsersViewModel(app.userEntityRepositorySingleton)
+        with(viewModel) {
+            Log.e("pie", "initViewModel:ListUsersFragment")
+            progressLiveData.observe(viewLifecycleOwner) { showProgress(it) }
+            userLiveData.observe(viewLifecycleOwner) { showUsers(it as MutableList<UserEntity>) }
+            errorLiveData.observe(viewLifecycleOwner) { showError(it) }
+        }
     }
 
     private fun initView() {
+        Log.e("pie", "initView: ListUsersFragment")
         binding.refreshButton.setOnClickListener {
-            presenter.onRefresh()
+            viewModel.onRefresh()
         }
         initRecyclerView()
         showProgress(false)
@@ -73,22 +83,19 @@ class ListUsersFragment : Fragment(), ListUsersContract.View {
             .commit()
     }
 
-    override fun showUsers(users: MutableList<UserEntity>) {
+    private fun showUsers(users: MutableList<UserEntity>) {
+        Log.e("pie", "showUsers:ListUsersFragment")
         adapterUserEntity.setListUsers(users)
     }
 
-    override fun showError(throwable: Throwable) {
+    private fun showError(throwable: Throwable) {
+        Log.e("pie", "showError:ListUsersFragment")
         Toast.makeText(requireActivity(), throwable.message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showProgress(inProgress: Boolean) {
+    private fun showProgress(inProgress: Boolean) {
+        Log.e("pie", "showProgress:ListUsersFragment")
         binding.progressBar.isVisible = inProgress
         binding.recyclerView.isVisible = !inProgress
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        _binding = null
-        presenter.detach()
     }
 }
