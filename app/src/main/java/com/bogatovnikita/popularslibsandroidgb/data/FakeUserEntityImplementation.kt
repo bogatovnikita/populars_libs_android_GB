@@ -5,6 +5,7 @@ import android.os.Looper
 import com.bogatovnikita.popularslibsandroidgb.R
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntityRepository
+import java.lang.IllegalStateException
 
 class FakeUserEntityImplementation : UserEntityRepository {
 
@@ -34,7 +35,10 @@ class FakeUserEntityImplementation : UserEntityRepository {
         onSuccess: (MutableList<UserEntity>) -> Unit,
         onError: ((Throwable) -> Unit)?
     ) {
-        Handler(Looper.getMainLooper()).postDelayed({ onSuccess(data) }, DATA_LOADING_FAKE_DELAY)
+        Handler(Looper.getMainLooper()).postDelayed({
+            //onSuccess(data)
+            onError?.invoke(IllegalStateException("Error"))
+        }, DATA_LOADING_FAKE_DELAY)
     }
 
     companion object {
