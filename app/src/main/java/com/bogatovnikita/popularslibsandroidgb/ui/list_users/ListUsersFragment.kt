@@ -40,11 +40,11 @@ class ListUsersFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel = ListUsersViewModel(app.userEntityRepositorySingleton)
+        viewModel = ListUsersViewModel(app.userEntityRepositorySingletonRetrofit)
         with(viewModel) {
             Log.e("pie", "initViewModel:ListUsersFragment")
             progressLiveData.observe(viewLifecycleOwner) { showProgress(it) }
-            userLiveData.observe(viewLifecycleOwner) { showUsers(it as MutableList<UserEntity>) }
+            userLiveData.observe(viewLifecycleOwner) { showUsers(it as List<UserEntity>) }
             errorLiveData.observe(viewLifecycleOwner) { showError(it) }
         }
     }
@@ -83,7 +83,7 @@ class ListUsersFragment : Fragment() {
             .commit()
     }
 
-    private fun showUsers(users: MutableList<UserEntity>) {
+    private fun showUsers(users: List<UserEntity>) {
         Log.e("pie", "showUsers:ListUsersFragment")
         adapterUserEntity.setListUsers(users)
     }

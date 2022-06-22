@@ -10,7 +10,7 @@ class UserEntityAdapter(private val clickListener: (UserEntity) -> Unit) :
 
     private var usersList = mutableListOf<UserEntity>()
 
-    fun setListUsers(usersItemList: MutableList<UserEntity>) {
+    fun setListUsers(usersItemList: List<UserEntity>) {
         usersList.clear()
         usersList.addAll(usersItemList)
         notifyDataSetChanged()

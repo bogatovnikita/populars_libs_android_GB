@@ -9,7 +9,7 @@ import java.lang.IllegalStateException
 
 class FakeUserEntityImplementation : UserEntityRepository {
 
-    private val data: MutableList<UserEntity> = mutableListOf(
+    private val data: List<UserEntity> = listOf(
         UserEntity(
             "Vladimir Puptin",
             1,
@@ -32,7 +32,7 @@ class FakeUserEntityImplementation : UserEntityRepository {
 
 
     override fun getUsers(
-        onSuccess: (MutableList<UserEntity>) -> Unit,
+        onSuccess: (List<UserEntity>) -> Unit,
         onError: ((Throwable) -> Unit)?
     ) {
         Handler(Looper.getMainLooper()).postDelayed({
