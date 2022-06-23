@@ -34,7 +34,7 @@ class ScreenUserFragment : Fragment() {
         with(binding) {
             iconIv.load(it.avatar)
             nameUserTv.text = it.login
-            descriptionUserTv.setText(it.description)
+            //descriptionUserTv.setText(it.description)
         }
     }
 
