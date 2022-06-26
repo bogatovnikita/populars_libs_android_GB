@@ -36,12 +36,17 @@ class ListUsersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("pie", "onViewCreated: fragment")
-        initView()
-        initViewModel()
+        Log.d("pie", "ListUsersFragment: onViewCreated")
+        if (savedInstanceState == null) {
+            Log.d("pie", "ListUsersFragment:savedInstanceState $savedInstanceState")
+            showProgress(false)
+            initView()
+            initViewModel()
+        }
     }
 
     private fun initViewModel() {
+        Log.e("pie", "ListUsersFragment:initViewModel")
         viewModel = ListUsersViewModel(app.userEntityRepositorySingletonRetrofit)
         viewModelDisposable.addAll(
             viewModel.progressLiveData.subscribe { showProgress(it) },
@@ -57,17 +62,18 @@ class ListUsersFragment : Fragment() {
     }
 
     private fun initView() {
-        Log.e("pie", "initView: ListUsersFragment")
+        Log.e("pie", "ListUsersFragment:initView")
         binding.refreshButton.setOnClickListener {
+            Log.e("pie", "ListUsersFragment:initView setOnClickListener")
             viewModel.onRefresh()
         }
         initRecyclerView()
-        showProgress(false)
     }
 
     private fun initRecyclerView() {
+        Log.e("pie", "ListUsersFragment:initRecyclerView")
         adapterUserEntity = UserEntityAdapter {
-            Log.e("pie", "ListUsersFragment:initRecyclerView $it")
+            Log.e("pie", "ListUsersFragment:initRecyclerView adapter $it")
             openUserScreenInfo(it)
         }
         binding.recyclerView.adapter = adapterUserEntity
@@ -91,17 +97,17 @@ class ListUsersFragment : Fragment() {
     }
 
     private fun showUsers(users: List<UserEntity>) {
-        Log.e("pie", "showUsers:ListUsersFragment")
+        Log.e("pie", "ListUsersFragment:showUsers")
         adapterUserEntity.setListUsers(users)
     }
 
     private fun showError(throwable: Throwable) {
-        Log.e("pie", "showError:ListUsersFragment")
+        Log.e("pie", "ListUsersFragment:showError")
         Toast.makeText(requireActivity(), throwable.message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showProgress(inProgress: Boolean) {
-        Log.e("pie", "showProgress:ListUsersFragment")
+        Log.e("pie", "ListUsersFragment:showProgress")
         binding.progressBar.isVisible = inProgress
         binding.recyclerView.isVisible = !inProgress
     }

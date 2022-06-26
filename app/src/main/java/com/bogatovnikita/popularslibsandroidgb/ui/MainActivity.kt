@@ -18,10 +18,11 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             initView()
         }
+        Log.e("pie", "MainActivity:savedInstanceState $savedInstanceState")
     }
 
     private fun initView() {
-        Log.d("pie", "initView:activity ")
+        Log.d("pie", "MainActivity: initView")
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.main_container_frame_layout, ListUsersFragment())
