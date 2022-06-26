@@ -9,12 +9,13 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bogatovnikita.popularslibsandroidgb.LIST_USERS_FROM_USER
 import com.bogatovnikita.popularslibsandroidgb.R
 import com.bogatovnikita.popularslibsandroidgb.app
 import com.bogatovnikita.popularslibsandroidgb.databinding.FragmentUsersListBinding
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
 import com.bogatovnikita.popularslibsandroidgb.ui.screen_user.ScreenUserFragment
-import com.bogatovnikita.popularslibsandroidgb.utils.LIST_USERS_FROM_USER
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class ListUsersFragment : Fragment() {
     private var _binding: FragmentUsersListBinding? = null
@@ -22,6 +23,7 @@ class ListUsersFragment : Fragment() {
 
     private lateinit var adapterUserEntity: UserEntityAdapter
     private lateinit var viewModel: ListUsersContract.ViewModel
+    private val viewModelDisposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,12 +43,17 @@ class ListUsersFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = ListUsersViewModel(app.userEntityRepositorySingletonRetrofit)
-        with(viewModel) {
-            Log.e("pie", "initViewModel:ListUsersFragment")
-            progressLiveData.observe(viewLifecycleOwner) { showProgress(it) }
-            userLiveData.observe(viewLifecycleOwner) { showUsers(it as List<UserEntity>) }
-            errorLiveData.observe(viewLifecycleOwner) { showError(it) }
-        }
+        viewModelDisposable.addAll(
+            viewModel.progressLiveData.subscribe { showProgress(it) },
+            viewModel.userLiveData.subscribe { showUsers(it as List<UserEntity>) },
+            viewModel.errorLiveData.subscribe { showError(it) }
+        )
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        viewModelDisposable.dispose()
+        super.onDestroy()
     }
 
     private fun initView() {

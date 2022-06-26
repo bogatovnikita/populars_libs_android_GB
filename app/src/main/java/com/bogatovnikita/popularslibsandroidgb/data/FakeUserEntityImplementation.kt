@@ -5,7 +5,7 @@ import android.os.Looper
 import com.bogatovnikita.popularslibsandroidgb.R
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntityRepository
-import java.lang.IllegalStateException
+import io.reactivex.rxjava3.core.Single
 
 class FakeUserEntityImplementation : UserEntityRepository {
 
@@ -40,6 +40,9 @@ class FakeUserEntityImplementation : UserEntityRepository {
             onError?.invoke(IllegalStateException("Error"))
         }, DATA_LOADING_FAKE_DELAY)
     }
+
+    override fun getUsers(): Single<List<UserEntity>> = Single.just(data)
+
 
     companion object {
         const val DATA_LOADING_FAKE_DELAY = 4000L

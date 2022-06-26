@@ -1,4 +1,4 @@
-package com.bogatovnikita.popularslibsandroidgb.utils
+package com.bogatovnikita.popularslibsandroidgb.ui.single_event_live_data
 
 import android.util.Log
 import androidx.annotation.MainThread

@@ -2,10 +2,10 @@ package com.bogatovnikita.popularslibsandroidgb.data.retrofit
 
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntityRepository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitUserEntityRepositoryImplementation : UserEntityRepository {
@@ -13,6 +13,7 @@ class RetrofitUserEntityRepositoryImplementation : UserEntityRepository {
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://api.github.com/")
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .build()
 
     private val api: GithubApi = retrofit.create(GithubApi::class.java)
@@ -21,23 +22,12 @@ class RetrofitUserEntityRepositoryImplementation : UserEntityRepository {
         onSuccess: (List<UserEntity>) -> Unit,
         onError: ((Throwable) -> Unit)?
     ) {
-        api.getUsers().enqueue(object : Callback<List<UserEntity>> {
-            override fun onResponse(
-                call: Call<List<UserEntity>>,
-                response: Response<List<UserEntity>>
-            ) {
-                val body = response.body()
-                if (response.isSuccessful && body != null) {
-                    onSuccess.invoke(body)
-                } else {
-                    onError?.invoke(IllegalStateException("Error"))
-                }
-            }
-
-            override fun onFailure(call: Call<List<UserEntity>>, t: Throwable) {
-                onError?.invoke(t)
-            }
-
-        })
+        api.getUsers().subscribeBy(
+            onSuccess = { onSuccess.invoke(it) },
+            onError = { onError?.invoke(it) }
+        )
     }
+
+    override fun getUsers(): Single<List<UserEntity>> = api.getUsers()
 }
+

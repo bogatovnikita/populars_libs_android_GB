@@ -14,16 +14,22 @@ class MainActivity : AppCompatActivity() {
         Log.e("pie", "MainActivity:onCreate")
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        initView()
         setContentView(binding.root)
+        if (savedInstanceState == null) {
+            initView()
+        }
     }
 
     private fun initView() {
         Log.d("pie", "initView:activity ")
-        this.supportFragmentManager
+        supportFragmentManager
             .beginTransaction()
-            .add(R.id.main_container_frame_layout, ListUsersFragment())
-            .disallowAddToBackStack()
+            .replace(R.id.main_container_frame_layout, ListUsersFragment())
             .commit()
+    }
+
+    override fun onDestroy() {
+        Log.e("pie", "onDestroy: MainActivity")
+        super.onDestroy()
     }
 }
