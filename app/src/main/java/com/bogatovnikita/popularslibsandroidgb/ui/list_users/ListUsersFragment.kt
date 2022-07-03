@@ -11,19 +11,22 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogatovnikita.popularslibsandroidgb.LIST_USERS_FROM_USER
 import com.bogatovnikita.popularslibsandroidgb.R
-import com.bogatovnikita.popularslibsandroidgb.app
 import com.bogatovnikita.popularslibsandroidgb.databinding.FragmentUsersListBinding
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
+import com.bogatovnikita.popularslibsandroidgb.domain.UserEntityRepository
 import com.bogatovnikita.popularslibsandroidgb.ui.screen_user.ScreenUserFragment
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListUsersFragment : Fragment() {
     private var _binding: FragmentUsersListBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var adapterUserEntity: UserEntityAdapter
-    private lateinit var viewModel: ListUsersContract.ViewModel
+    private val viewModel: ListUsersViewModel by viewModel()
     private val viewModelDisposable = CompositeDisposable()
+    private val userEntityRepositorySingletonRetrofit: UserEntityRepository by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +50,6 @@ class ListUsersFragment : Fragment() {
 
     private fun initViewModel() {
         Log.e("pie", "ListUsersFragment:initViewModel")
-        viewModel = ListUsersViewModel(app.userEntityRepositorySingletonRetrofit)
         viewModelDisposable.addAll(
             viewModel.progressLiveData.subscribe { showProgress(it) },
             viewModel.userLiveData.subscribe { showUsers(it as List<UserEntity>) },
