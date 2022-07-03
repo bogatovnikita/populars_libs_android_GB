@@ -1,13 +1,12 @@
 package com.bogatovnikita.popularslibsandroidgb.data
 
 import android.os.Handler
-import android.os.Looper
 import com.bogatovnikita.popularslibsandroidgb.R
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntityRepository
 import io.reactivex.rxjava3.core.Single
 
-class FakeUserEntityImplementation : UserEntityRepository {
+class FakeUserEntityImplementation(val handler: Handler) : UserEntityRepository {
 
     private val data: List<UserEntity> = listOf(
         UserEntity(
@@ -35,8 +34,8 @@ class FakeUserEntityImplementation : UserEntityRepository {
         onSuccess: (List<UserEntity>) -> Unit,
         onError: ((Throwable) -> Unit)?
     ) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            //onSuccess(data)
+        handler.postDelayed({
+            onSuccess(data)
             onError?.invoke(IllegalStateException("Error"))
         }, DATA_LOADING_FAKE_DELAY)
     }
