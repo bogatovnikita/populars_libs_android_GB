@@ -2,7 +2,6 @@ package com.bogatovnikita.popularslibsandroidgb.di
 
 import android.os.Handler
 import android.os.Looper
-import com.bogatovnikita.popularslibsandroidgb.data.FakeUserEntityImplementation
 import com.bogatovnikita.popularslibsandroidgb.data.retrofit.GithubApi
 import com.bogatovnikita.popularslibsandroidgb.data.retrofit.RetrofitUserEntityRepositoryImplementation
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntityRepository

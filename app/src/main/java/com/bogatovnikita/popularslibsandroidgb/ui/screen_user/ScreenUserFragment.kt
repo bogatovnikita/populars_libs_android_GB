@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import coil.load
+import com.bogatovnikita.popularslibsandroidgb.LIST_USERS_FROM_USER
 import com.bogatovnikita.popularslibsandroidgb.databinding.FragmentScreenUserBinding
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
-import com.bogatovnikita.popularslibsandroidgb.LIST_USERS_FROM_USER
 
 class ScreenUserFragment : Fragment() {
     private var _binding: FragmentScreenUserBinding? = null
