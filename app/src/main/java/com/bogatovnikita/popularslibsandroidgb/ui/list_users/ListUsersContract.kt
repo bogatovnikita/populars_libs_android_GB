@@ -6,9 +6,9 @@ import io.reactivex.rxjava3.core.Observable
 interface ListUsersContract {
 
     interface ViewModel {
-        val userLiveData: Observable<List<UserEntity>>
-        val errorLiveData: Observable<Throwable>
-        val progressLiveData: Observable<Boolean>
+        val userObservable: Observable<List<UserEntity>>
+        val errorObservable: Observable<Throwable>
+        val progressObservable: Observable<Boolean>
 
         fun onRefresh()
     }

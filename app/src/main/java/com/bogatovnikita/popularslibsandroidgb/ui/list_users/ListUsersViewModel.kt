@@ -13,25 +13,25 @@ import io.reactivex.rxjava3.subjects.Subject
 
 class ListUsersViewModel(private val userEntityRepository: UserEntityRepository) :
     ListUsersContract.ViewModel, ViewModel() {
-    override val userLiveData: Observable<List<UserEntity>> = BehaviorSubject.create()
-    override val errorLiveData: Observable<Throwable> = BehaviorSubject.create()
-    override val progressLiveData: Observable<Boolean> = BehaviorSubject.create()
+    override val userObservable: Observable<List<UserEntity>> = BehaviorSubject.create()
+    override val errorObservable: Observable<Throwable> = BehaviorSubject.create()
+    override val progressObservable: Observable<Boolean> = BehaviorSubject.create()
 
     override fun onRefresh() {
         loadData()
     }
 
     private fun loadData() {
-        progressLiveData.mutable().onNext(true)
+        progressObservable.mutable().onNext(true)
         userEntityRepository.getUsers()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = {
-                    progressLiveData.mutable().onNext(false)
-                    userLiveData.mutable().onNext(it)
+                    progressObservable.mutable().onNext(false)
+                    userObservable.mutable().onNext(it)
                 }, onError = {
-                    progressLiveData.mutable().onNext(false)
-                    errorLiveData.mutable().onNext(it)
+                    progressObservable.mutable().onNext(false)
+                    errorObservable.mutable().onNext(it)
                 }
             )
     }
