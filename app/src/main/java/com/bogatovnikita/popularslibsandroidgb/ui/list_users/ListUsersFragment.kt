@@ -11,22 +11,27 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogatovnikita.popularslibsandroidgb.LIST_USERS_FROM_USER
 import com.bogatovnikita.popularslibsandroidgb.R
+import com.bogatovnikita.popularslibsandroidgb.app
 import com.bogatovnikita.popularslibsandroidgb.databinding.FragmentUsersListBinding
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntity
 import com.bogatovnikita.popularslibsandroidgb.domain.UserEntityRepository
 import com.bogatovnikita.popularslibsandroidgb.ui.screen_user.ScreenUserFragment
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class ListUsersFragment : Fragment() {
     private var _binding: FragmentUsersListBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var adapterUserEntity: UserEntityAdapter
-    private val viewModel: ListUsersViewModel by viewModel()
     private val viewModelDisposable = CompositeDisposable()
-    private val userEntityRepositorySingletonRetrofit: UserEntityRepository by inject()
+
+    @Inject
+    lateinit var userEntityRepositorySingletonRetrofit: UserEntityRepository
+
+    private val viewModel: ListUsersViewModel by lazy {
+        ListUsersViewModel(userEntityRepositorySingletonRetrofit)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +48,7 @@ class ListUsersFragment : Fragment() {
         if (savedInstanceState == null) {
             Log.d("pie", "ListUsersFragment:savedInstanceState $savedInstanceState")
             showProgress(false)
+            app.appComponent.inject(this)
             initView()
             initViewModel()
         }
@@ -51,9 +57,9 @@ class ListUsersFragment : Fragment() {
     private fun initViewModel() {
         Log.e("pie", "ListUsersFragment:initViewModel")
         viewModelDisposable.addAll(
-            viewModel.progressLiveData.subscribe { showProgress(it) },
-            viewModel.userLiveData.subscribe { showUsers(it as List<UserEntity>) },
-            viewModel.errorLiveData.subscribe { showError(it) }
+            viewModel.progressObservable.subscribe { showProgress(it) },
+            viewModel.userObservable.subscribe { showUsers(it as List<UserEntity>) },
+            viewModel.errorObservable.subscribe { showError(it) }
         )
     }
 
